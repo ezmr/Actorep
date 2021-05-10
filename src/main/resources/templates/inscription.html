@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="js/inscription.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="/css/actorepCss.css">
+    <script type="text/css">
+        .ng-touched.ng-invalid:not(formInscription) {
+        border: 10px solid red;
+        }
+    </script>
+    <title>Document</title>
+</head>
+<body ng-app="myApp">
+<div class="container-fluid bg-light">
+
+<div th:replace="navbar :: menuBis"></div>
+
+    <div class="row mt-100 mb-100">
+    
+        <div class="col-md-4 col-lg-4 mx-auto">
+        
+        <div class="card border-info mb-3">
+		  <div class="card-header"><h1 id="inscription">INSCRIPTION</h1></div>
+		  <div class="card-body text-info">
+		    
+	<form name="formInscription" ng-submit="save()" ng-controller="inscriptionCtrl" novalidate>
+
+    <div class="form-group">
+        <label >NOM</label>
+        <input name="nom" ng-model="formInscription.no"  class="form-control" type="text" ng-minlength="2" ng-required="true">
+    </div>
+    <div ng-show="formInscription.nom.$touched && formInscription.nom.$invalid">
+        <small class="alert alert-danger" style="color:red; display: block; text-align:center; ">Le nom doit contenir au moins 2 lettre</small>
+    </div>
+    <div class="form-group">
+        <label>E-MAIL</label>
+        <input name="mail" ng-model="formInscription.mai"  class="form-control" type="email" required>
+    </div>
+    <div ng-show="formInscription.mail.$touched && formInscription.mail.$invalid">
+        <small class="alert alert-danger" style="color:red; display: block; text-align:center; ">Entrer un @email valide</small>
+    </div>
+    <div class="form-group">
+        <label>TELEPHONE</label>
+        <input name="telephone" ng-model="formInscription.telephon"  class="form-control" type="number" ng-minlength="10" required>
+    </div>
+    <div ng-show="formInscription.telephone.$touched && formInscription.telephone.$invalid">
+        <small class="alert alert-danger" style="color:red; display: block; text-align:center; ">Le numero de telephone doit contenir au moins 10 chiffres</small>
+    </div>
+
+    <div class="form-group">
+        <label>PRESENTATION</label>
+        <input name="presentation" ng-model="formInscription.presentatio" class="form-control" type="text">
+    </div>
+
+    <div class="form-group">
+        <label>IMAGE</label>
+        <input name="image" ng-model="formInscription.imag" class="form-control" type="text">
+    </div>
+
+    <div class="form-group">
+        <label>VIDEO</label>
+        <input name="video" ng-model="formInscription.vide" class="form-control" type="text">
+    </div>
+
+    <div class="form-group">
+        <label>ADRESSE</label>
+        <input name="adresse" ng-model="formInscription.adress" class="form-control" type="text" required>
+    </div>
+    <div class="form-group">
+        <label>VILLE</label>
+        <input name="ville" ng-model="formInscription.vill" class="form-control" type="text" required>
+    </div>
+    <div class="form-group">
+        <label>CODE POSTAL</label>
+        <input name="codePostal" ng-model="formInscription.codePosta" class="form-control" type="number" ng-minlength="5" required>
+    </div>
+    <div ng-show="formInscription.codePostal.$touched && formInscription.codePostal.$invalid">
+        <small class="alert alert-danger" style="color:red; display: block; text-align:center; ">Le code postal doit contenir 5 chiffres</small>
+    </div>
+    <div class="form-group" ng-controller="paysCtrl">
+        <label>PAYS</label>
+        <select name="pays" ng-options="p.libellePays for p in pays" ng-model="formInscription.pays" class="form-control">
+        </select>
+    </div>
+    <div class="form-group" ng-controller="metierCtrl">
+        <label>METIER</label>
+        <select name="metier" ng-options="m.libelleMetier for m in metier"  ng-model="formInscription.metier" class="form-control">
+        </select>
+    </div>
+
+
+    <div class="form-group" ng-controller="categorieCtrl">
+        <label>CATEGORIE</label>
+        <select name="categorie" ng-options="c.libelleCategorie for c in categorie" ng-model="formInscription.categorie" class="form-control">
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>PASSWORD</label>
+        <input name="password" ng-model="formInscription.passwor" class="form-control" type="password" ng-minlength="8" required>
+    </div>
+    <div ng-show="formInscription.password.$touched && formInscription.password.$invalid">
+        <small class="alert alert-danger" style="color:red; display: block; text-align:center; ">Le password doit contenir au moins 8 caracteres</small>
+    </div>
+    <div class="form-group">
+        <button type="submit" ng-disabled="formInscription.$invalid" class="btn btn-success btn btn-block">VALIDER</button>
+    </div>
+    <div ng-show="formInscription.$submitted">
+        <small class="alert alert-info" style="color:primary; display: block; text-align:center; ">Votre compte a ete creer avec succes. Merci de vous connecter</small>
+    </div>
+
+</form>
+        </div>
+
+		  </div>
+		</div>
+        
+            
+        
+        
+        
+        
+        <div class="col-md-4 col-lg-4 mx-auto" style="margin-top: 200px;">
+        
+        <div class="card border-info mb-3">
+		  <div class="card-header"><h1 id="connexion">CONNEXION</h1></div>
+		  <div class="card-body text-info">
+		    <form class="mx-auto" name="formConnexion" ng-controller="ConnexionCtrl" ng-submit="checkIdentifiant()">
+                <div class="form-group">
+                    <label for="username">USERNAME</label>
+                    <input type="text" ng-model="formConnexion.username" class="form-control" placeholder="Entrer USERNAME" id="username">
+
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" ng-model="formConnexion.password" class="form-control" placeholder="Entrer password" id="password">
+                </div>
+                <div>
+                    <!--<a href="#">Mot de passe oublié</a>-->
+                </div>
+                <br>
+                <div class="form-group">
+                <button type="submit" class="btn btn-success btn btn-block">VALIDER</button>
+                </div>
+                <div ng-show="formConnexion.$submitted">
+                    <small class="alert alert-info" style="color:red; display: block; text-align:center; ">Identification incorrect. Merci de réessayer</small>
+                </div>
+            </form>
+		  </div>
+		</div>
+        
+            
+
+            
+        </div>
+
+
+
+
+    </div>
+</div>
+<div th:replace="navbar :: footer"></div>
+</body>
+</html>

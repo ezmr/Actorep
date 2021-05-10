@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <!-- <link rel="stylesheet" href="css/style.css"> -->
+    <link rel="stylesheet" href="css/ActorepCss.css">
+    <script src="js/service.js"></script>
+    <title>Document</title>
+</head>
+<body ng-app="myApp" >
+<div class="container-fluid">
+
+<div th:replace="navbar :: menuBis"></div>
+    <div class="row mt-100 mb-100">
+        <div class="col-md-4 col-lg-4">
+        </div>
+        <div class="col-md-4 col-lg-4 mx-auto">
+            <h2 class="text-center">MES SERVICES</h2><hr>
+        </div>
+        <div class="col-md-4 col-lg-4">
+        </div>
+    </div>
+    <div class="row">
+    	<div class="col-md-1 col-lg-1 mx-auto"></div>
+        <div class="col-md-4 col-lg-4 mx-auto">
+            <form name="s"  ng-controller="serviceCtrl">
+                <div class="card border-info bg-light">
+                    <div class="card-body">
+                        <h5 class="card-title text-info">Mes services</h5><hr>
+                        <p ng-repeat-start="s in service"  >
+                        <h6 class="card-subtitle mb-2 text-muted " name="index" id="index" ng-model="s.index"></h6>
+                        <h6 class="card-subtitle mb-2 text-muted " name="id" id="id" ng-model="s.id"></h6>
+
+                        <h6 class="card-subtitle mb-2 text-muted " name="idActivie" id="idActivie" ng-model="s.idActivie"></h6>
+                        <h6 class="card-subtitle mb-2 text-muted " name="idActeur" id="idActeur" ng-model="s.idActeur"></h6>
+
+                        <h6 class="card-subtitle mb-2 text-muted " name="libelleActivite" id="libelleActivite" ng-model="s.libelleActivite">libelleActivite : {{s.libelleActivite}}</h6>
+                        <h6 class="card-subtitle mb-2 text-muted " name="descriptionActivite" id="descriptionActivite" ng-model="s.descriptionActivite">descriptionActivite : {{s.descriptionActivite}}</h6>
+                        <h6 class="card-subtitle mb-2 text-muted " name="prixActiviteActeur" id="prixActiviteActeur" ng-model="s.prixActiviteActeur">prixActiviteActeur : {{s.prixActiviteActeur}}</h6>
+                        
+                        <button ng-click="deleteService(s, $index)" class="btn btn-danger" ng-repeat-end>Supprimer</button>
+                        </p>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-1 col-lg-1 mx-auto"></div>
+        <div class="col-md-5 col-lg-5 mx-auto">
+            <form ng-submit="addService()" name="formService" ng-controller="addServiceCtrl">
+                <div class="card border-info bg-light">
+                    <div class="card-body">
+                        <h5 class="card-title">Ajouter un service</h5><hr>
+                        <input name="libelleActivite" ng-model="formService.libelleActivit" placeholder="nom du service" class="form-control" type="text"><br>
+
+                        <textarea name="descriptionActivite" ng-model="formService.descriptionActivit" placeholder="descritpion du service" class="form-control" type="text"></textarea><br>
+
+                        <input name="prixActiviteActeur" ng-model="formService.prixActiviteActeu" placeholder="prix du service" class="form-control" type="text"><br>
+                        <button class="btn btn-success">Valider</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-1 col-lg-1 mx-auto"></div>
+    </div>
+</div>
+
+<div th:replace="navbar :: footer"></div>
+</body>
+</html>

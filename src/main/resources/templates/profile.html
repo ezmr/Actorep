@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="/css/bootstrap.css">
+<link rel="stylesheet" href="/css/actorepCss.css">
+<script src="/js/angular.min.js"></script>
+<title>Profile</title>
+</head>
+<body>
+
+<div class="container-fluid" data-ng-app="profileApp">
+
+<div th:replace="navbar :: menuBis"></div>
+
+
+	<div class="row mb-5 mt-100">
+		<div class="col-1" ></div>
+		<div class="col-10 bg-light" data-ng-controller="profileCtrl">
+		
+			<div class="row">
+				<div class="col-3"><img th:src="@{${acteur.image}}" class="img-fluid" height="400" width="400" alt=""></div>
+				<div class="col-9">
+				
+					<div class="card border-info">
+					  <div class="card-header">Informations</div>
+					  <div class="card-body text-info">
+					    <!--<h5 class="card-title">Info card title</h5>-->
+					    <p class="card-text">Nom : <span th:text="${acteur.nom}"></span> </p>
+					    <p class="card-text">Mail : <span th:text="${acteur.mail}"></span> </p>
+					    <p class="card-text">Telephone : <span th:text="${acteur.telephone}"></span> </p>
+					    <p class="card-text">Categorie : <span th:text="${acteur.categorie.libelleCategorie}"></span> </p>
+					    <p class="card-text">Metier : <span th:text="${acteur.metier.libelleMetier}"></span> </p>
+					    <!--<p class="card-text">Image : <span th:text="${acteur.image}"></span> </p>-->
+					  </div>
+					</div>
+					
+				</div>
+			</div>
+			
+			<hr>
+			
+			<div class="row mb-5">
+			<div class="col-12">
+			
+				<div class="card text-center border-info">
+				  <div class="card-header">
+				    <ul class="nav nav-tabs card-header-tabs">
+				    
+				      <li class="nav-item">
+				        <a class="nav-link active" href="" id="linkService" ng-click="isClicked('linkService')">Services</a>
+				      </li>
+				      
+				      <li class="nav-item">
+				        <a class="nav-link" href="" id="linkExperience" ng-click="isClicked('linkExperience')">Experiences</a>
+				      </li>
+				      
+				      <li class="nav-item">
+				        <a class="nav-link" href="" id="linkPresentation" ng-click="isClicked('linkPresentation')">A propos</a>
+				      </li>
+				      
+				    </ul>
+				  </div>
+				  
+				  <div class="card-body border-info" id="sectionExperiences" ng-show="showSectionExperiences">
+				  	<span th:each="exp : ${acteur.lesExperiences}">
+					<div class="card border-secondary">
+					  <div class="card-header"> <span th:text="${exp.objet}"></span> </div>
+					  <div class="card-body text-secondary">
+					    <h5 class="card-title"><span th:text="${exp.dateDebut}"></span> - <span th:text="${exp.dateFin}"></span></h5>
+					    <p class="card-text"><span th:text="${exp.description}"></span></p>
+					  </div>
+					</div><hr>
+					</span>
+				  </div>
+				  
+				  <div class="card-body" id="sectionServices" ng-show="showSectionServices">
+					  <div class="row">
+						    <div class="col-4" th:each="service : ${services}">
+					    		<div class="card border-dark mb-3" >
+							  	<div class="card-header" th:text="${service.activite.libelleActivite}"></div>
+							  	<div class="card-body text-dark">
+							    	<h5 class="card-title">Prix : <span th:text="${service.prixActiviteActeur}"></span> euros</h5>
+							    	<p class="card-text"> Description : <span th:text="${service.activite.descriptionActivite}"></span></p>
+							  	</div>
+								</div>
+						    </div>
+					    </div>
+				  </div>
+				  
+				  
+				  
+				  <div class="card-body" id="sectionPresentation" ng-show="showSectionPresentation">
+				    <h5 class="card-title">Presentation</h5>
+				    <p class="card-text">Presentation : <span th:text="${acteur.presentation}"></span> </p>
+				    <hr>
+				    <h5 class="card-title">Video de presentation</h5>
+				    <iframe width="1280" height="720" class="embed-responsive-item" th:src="${acteur.video}" allowfullscreen></iframe>
+				  </div>
+				  
+				</div>
+			
+			</div>
+			</div>
+			
+		</div>
+		<div class="col-1"></div>
+	</div>
+	
+<footer class="page-footer font-small bg-info fixed-bottom">
+ <div class="footer-copyright text-center py-3">
+   © 2020 Copyright: ActoRep - AFPA PARIS 12ème
+ </div>
+</footer>
+
+</div>
+
+
+<script th:inline="javascript">
+
+var rechercheApp = angular.module("profileApp", []);
+
+rechercheApp.controller("profileCtrl", function ($scope, $http){
+	
+	$scope.activeElement = document.getElementById("linkService");
+	$scope.showSectionServices = true;
+	$scope.showSectionExperiences = false;
+	$scope.showSectionPresentation = false;
+	
+	$scope.isClicked = function (param) {
+		
+		if (param == "linkService") {
+			$scope.showSectionServices = true;
+			$scope.showSectionExperiences = false;
+			$scope.showSectionPresentation = false;
+			
+			angular.element($scope.activeElement).removeClass("active");
+			angular.element(document.getElementById("linkService")).addClass("active");
+			$scope.activeElement = document.getElementById("linkService");
+		}
+		
+		if (param == "linkExperience") {
+			$scope.showSectionServices = false;
+			$scope.showSectionExperiences = true;
+			$scope.showSectionPresentation = false;
+			
+			angular.element($scope.activeElement).removeClass("active");
+			angular.element(document.getElementById("linkExperience")).addClass("active");
+			$scope.activeElement =document.getElementById("linkExperience");
+		}
+		
+		if (param == "linkPresentation") {
+			$scope.showSectionServices = false;
+			$scope.showSectionExperiences = false;
+			$scope.showSectionPresentation = true;
+			
+			angular.element($scope.activeElement).removeClass("active");
+			angular.element(document.getElementById("linkPresentation")).addClass("active");
+			$scope.activeElement =document.getElementById("linkPresentation");
+		}
+		
+	}
+
+});
+
+	
+</script>
+
+
+
+</body>
+
+</html>

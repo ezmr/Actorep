@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="/css/bootstrap.css">
+<link rel="stylesheet" href="/css/admin.css">
+<link rel="stylesheet" href="/css/actorepCss.css">
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<meta charset="UTF-8">
+<!--  
+<link rel="stylesheet" href="/css/bootstrap.css">
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+-->
+
+
+
+</head>
+<body>
+<div th:replace="navbar :: menuBis"></div>
+<nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark mt-80">
+  <a class="navbar-brand" href="#">Admin
+  <i class="fa fa-user-circle" aria-hidden="true"></i></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" th:href="@{/Actorep/valideradmin}">
+          <i class="fa fa-check-square">
+          <span class="badge badge-danger"></span>
+          </i>
+          
+          En attente de validation  
+          <span class="sr-only">(current)</span>
+          </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">
+          <i class="fa fa-plus-square">
+            
+          </i>
+          Feed Database
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " th:href="@{/Actorep/modereradmin}">
+          <i class=" fa fa fa-cogs">
+            
+          </i>
+          Modérer
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " href="#">
+          <i class="fa fa-pie-chart">
+            
+          </i>
+          Statistiques
+        </a>
+      </li>
+      
+        </li>
+    </ul>
+    <ul class="navbar-nav ">
+      <li class="nav-item">
+        
+      </li>
+      <li class="nav-item">
+        
+      </li>
+    </ul>
+    
+  </div>
+</nav><br>
+
+ 
+
+
+<div class="container">
+  <div class="row mb-100">
+    <div class="col-sm">
+      <form th:action="@{/Actorep/datafeedadmin1}" 
+th:object="${ChampsajouterModel}" method="post">
+  <input type="text" class="form-control" th:field="*{champs}" placeholder="Ajouter Catégorie" />
+  <ul></ul>
+  <div class="text-center">
+  <button type="submit" class="btn btn-success center-block">Ajouter</button>
+  </div>
+</form>
+<ul></ul>
+<li class="list-group-item active">Catégories</li>
+<ul class="list-group" th:each="cat: ${lesCategories}">
+
+  <li class="list-group-item" th:text="${cat.libelleCategorie}" ></li>
+  
+</ul>
+    </div>
+    <div class="col-sm">
+      <form th:action="@{/Actorep/datafeedadmin2}" 
+th:object="${ChampsajouterModel}" method="post">
+  <input type="text" class="form-control" th:field="*{champs}" placeholder="Ajouter Activité" />
+  <ul></ul>
+  <div class="text-center">
+  <button type="submit" class="btn btn-success">Ajouter</button>
+  </div>
+</form>
+<ul></ul>
+
+<li class="list-group-item active">Activités</li>
+<ul class="list-group" th:each="act: ${lesActivites}">
+
+  <li class="list-group-item" th:text="${act.libelleActivite}" ></li>
+  
+</ul>
+    </div>
+    <div class="col-sm">
+      <form th:action="@{/Actorep/datafeedadmin3}" 
+th:object="${ChampsajouterModel}" method="post">
+  <input type="text" class="form-control" th:field="*{champs}" placeholder="Ajouter Métier" />
+  <ul></ul>
+  <div class="text-center">
+  <button type="submit" class="btn btn-success">Ajouter</button>
+  </div>
+</form>
+<ul></ul>
+
+
+<li class="list-group-item active">Métiers</li>
+<ul class="list-group" th:each="met: ${lesMetiers}">
+
+  <li class="list-group-item" th:text="${met.libelleMetier}" ></li>
+  
+</ul>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<div th:replace="navbar :: footer"></div>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="/css/bootstrap.css">
+<link rel="stylesheet" href="/css/actorepCss.css">
+<title>Home</title>
+</head>
+<body>
+
+	<div th:replace="navbar :: menu"></div>
+
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-4"></div>
+			<div class="col-4 mt-5">
+				<img class="img-fluid mx-auto" src="/img/logo1.png" alt="ActoRep"><br>
+
+				<form th:action="@{/Actorep/Recherche}"
+					th:object="${RechercheHomeModel}" method="post">
+					<div class="input-group input-group-lg mb-3">
+						<input type="text" class="form-control" th:field="*{recherche}" placeholder="Rechercher" />
+
+						<select class="form-control custom-select" id="selectTable" th:field="*{type}">
+							<option th:value="acteur" selected>Acteur</option>
+							<option th:value="categorie">Catégorie</option>
+							<option th:value="metier">Métier</option>
+							<option th:value="service">Service</option>
+						</select>
+						<button type="submit" class="btn btn-info">OK</button>
+					</div>
+				</form>
+
+			</div>
+		</div>
+	</div>
+
+</body>
+<footer class="page-footer font-small bg-info fixed-bottom">
+	<div class="footer-copyright text-center py-3">© 2020 Copyright:
+		ActoRep - AFPA PARIS 12ème</div>
+</footer>
+</html>

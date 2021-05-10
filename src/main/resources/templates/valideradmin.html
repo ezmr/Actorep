@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="/css/bootstrap.css">
+<link rel="stylesheet" href="/css/admin.css">
+<link rel="stylesheet" href="/css/actorepCss.css">
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<meta charset="UTF-8">
+<!------ 
+<link rel="stylesheet" href="/css/bootstrap.css">
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+ ---------->
+
+</head>
+<body>
+<div th:replace="navbar :: menuBis"></div>
+<nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark mt-80">
+  <a class="navbar-brand" href="#">Admin
+  <i class="fa fa-user-circle" aria-hidden="true"></i></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="#">
+          <i class="fa fa-check-square">
+          <span class="badge badge-danger"></span>
+          </i>
+          
+          En attente de validation  
+          <span class="sr-only">(current)</span>
+          </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" th:href="@{/Actorep/datafeedadmin}">
+          <i class="fa fa-plus-square">
+            
+          </i>
+          Feed Database
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " th:href="@{/Actorep/modereradmin}">
+          <i class=" fa fa fa-cogs">
+            
+          </i>
+          Modérer
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " href="#">
+          <i class="fa fa-pie-chart">
+            
+          </i>
+          Statistiques
+        </a>
+      </li>
+      
+        </li>
+    </ul>
+    <ul class="navbar-nav ">
+      <li class="nav-item">
+        
+      </li>
+      <li class="nav-item">
+        
+      </li>
+    </ul>
+    
+  </div>
+</nav>
+
+<br><br>
+<div class="container">
+
+<tr th:each="item: ${lesComptes}">
+ <div class="well col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2 mb-100">
+        
+
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Profil</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-3 col-lg-3 hidden-xs hidden-sm">
+                                <img class="img-circle"
+                                     src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=100"
+                                     alt="User Pic">
+                            </div>
+                            <div class="col-xs-2 col-sm-2 hidden-md hidden-lg">
+                                <img class="img-circle"
+                                     src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=50"
+                                     alt="User Pic">
+                            </div>
+                            <div class=" col-md-9 col-lg-9 hidden-xs hidden-sm">
+                                <strong>Informations</strong><br>
+                                <table class="table table-user-information">
+                                    <tbody>
+                                    <tr>
+                                        <td>Nom:</td>
+                                     <td><a th:href="@{/Actorep/Profile(idActeur=${item.acteur.idActeur})}" ><span th:text="${item.acteur.nom}" ></span></a></td>
+                                    </tr>   
+                                    <tr>
+                                        <td>Catégorie:</td>
+                                        <td><span th:text="${item.acteur.categorie.libelleCategorie}" ></span></td>
+                                    </tr>                               
+                                    <tr>
+                                        <td>Métier:</td>
+                                        <td><span th:text="${item.acteur.metier.libelleMetier}" ></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Description:</td>
+                                        <td><span th:text="${item.acteur.presentation}" ></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Mail:</td>
+                                        <td><span th:text="${item.acteur.mail}" ></span></td>
+                                    </tr>                                  
+                                    <tr>
+                                        <td>Téléphone:</td>
+                                     <td><span th:text="${item.acteur.telephone}" ></span></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        
+                        <a th:href="@{/valideradmin(section='validerprofil', idCompte=${item.idCompte}, idActeur=${item.acteur.idActeur})}" class="btn btn-success">Valider Profil</a>
+                        <a th:href="@{/Actorep/Profile(idActeur=${item.acteur.idActeur})}" class="btn btn-primary">Profil Complet</a>
+                        <a th:href="@{/valideradmin(section='deleteprofil', idCompte=${item.idCompte}, idActeur=${item.acteur.idActeur})}" class="btn btn-danger">Supprimer Profil</a>
+                                 
+                    </div>
+                    
+                </div>
+            </div>
+            
+            
+            </tr>
+            
+            
+            
+            
+            
+            
+        </div>
+                </div>
+                
+                
+                
+            </div>
+            <div th:replace="navbar :: footer"></div>
+
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <!--<link rel="stylesheet" href="css/style.css">-->
+    <link rel="stylesheet" href="css/ActorepCss.css">
+    <script src="js/experience.js"></script>
+    <title>Document</title>
+</head>
+<body ng-app="myApp">
+<div class="container-fluid">
+    
+    <div th:replace="navbar :: menuBis"></div>
+	<div class="row mt-100 mb-100">
+		<div class="col-md-4 col-lg-4 mx-auto"></div>
+		<div class="col-md-4 col-lg-4 mx-auto"><h2 class="text-center">MES EXPERIENCES</h2><hr></div>
+		<div class="col-md-4 col-lg-4 mx-auto"></div>
+	</div>
+    <div class="row">
+    	<div class="col-md-1 col-lg-1 mx-auto"></div>
+        <div class="col-md-4 col-lg-4 mx-auto">
+            <form name="f"  ng-controller="experienceCtrl">
+            
+            
+            <div class="card border-info mb-3 bg-light">
+			  <div class="card-header"><h5 class="card-title">Mes experiences</h5></div>
+			  <div class="card-body text-info">
+			    <p ng-repeat-start="e in experience"  >
+
+                    <h6 class="card-subtitle mb-2 text-muted" name="index" id="index" ng-model="f.index"></h6>
+                    <h6 class="card-subtitle mb-2 text-muted" name="idExperience" id="idExperience" ng-model="f.idExperience"></h6>
+
+                    <h6 class="card-subtitle mb-2 text-muted" name="objet" id="objet" ng-model="f.objet">Metier : {{e.objet}}</h6>
+                    <h6 class="card-subtitle mb-2 text-muted" name="dateDebut" id="dateDebut" ng-model="f.dateDebut">Date de debut :{{e.dateDebut}}</h6>
+                    <h6 class="card-subtitle mb-2 text-muted" name="dateFin" id="dateFin" ng-model="f.dateFin">Date de fin : {{e.dateFin}}</h6>
+                    <h6 class="card-subtitle mb-2 text-muted" name="description" id="description" ng-model="f.description">Description  : {{e.description}}</h6>
+                    <button ng-click="deleteExperience(e, $index)" class="btn btn-danger" ng-repeat-end>Supprimer</button>
+
+                 </p>
+			  </div>
+			</div>
+            
+            </form>
+        </div>
+		<div class="col-md-1 col-lg-1 mx-auto"></div>
+        <div class="col-md-5 col-lg-5 mx-auto">
+            <form ng-submit="addExperience()" name="formExperience" ng-controller="addExperienceCtrl">
+            
+            <div class="card border-info mb-3 bg-light">
+			  <div class="card-header"><h5 class="card-title">Ajouter une experience</h5></div>
+			  <div class="card-body text-info">
+			    
+                 <label >metier</label><br>
+                 <input name="objet" ng-model="formExperience.obj" class="form-control" type="text">
+
+                 <label >date de debut</label>
+                 <input name="dateDebut" ng-model="formExperience.dateDebu" class="form-control" type="text">
+                 <label >date de fin</label><br>
+                 <input name="dateFin" ng-model="formExperience.dateFi" class="form-control" type="text">
+
+
+                 <label>Description experience</label>
+                 <textarea name="description" ng-model="formExperience.descriptio" class="form-control" type="text"></textarea><br>
+
+
+                 <button type="submit" class="btn btn-success" >Valider</button>
+			  </div>
+			</div>
+            </form>
+        </div>
+		<div class="col-md-1 col-lg-1 mx-auto"></div>
+    </div>
+</div>
+
+<div th:replace="navbar :: footer"></div>
+</body>
+</html>

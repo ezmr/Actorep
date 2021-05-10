@@ -1,0 +1,19 @@
+body{
+
+    margin-top: 50px;
+}
+#inscription{
+    text-align: center;
+}
+#connexion{
+    text-align: center;
+}
+
+.card{
+    margin-top: 50px;
+}
+
+.container{
+    background-color:silver;
+}
+

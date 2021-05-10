@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <!-- <link rel="stylesheet" href="css/style.css"> -->
+    <link rel="stylesheet" href="css/actorepCss.css">
+    <script src="js/compte.js"></script>
+    <script type="text/css">
+        .ng-touched.ng-invalid:not(formInscription) {
+        border: 10px solid red;
+        }
+    </script>
+    <title>Document</title>
+</head>
+<body ng-app="myApp">
+<div class="container-fluid bg-light" ng-controller="compteCtrl">
+
+<div th:replace="navbar :: menuBis"></div>
+
+    <div class="">
+        <div class="row">
+            <a id="deconnexion" ng-click="deconnexion()" class="btn btn-primary" role="button">DECONNEXION</a>
+        </div>
+    <div class="row mt-100 mb-100">
+
+        <div class="col-md-5 col-lg-5 mx-auto" >
+        
+        <div class="card border-info mb-3" >
+		  <div class="card-header"><h1>MON COMPTE</h1></div>
+		  <div class="card-body text-info">
+		  
+		    <form name="formUp">
+                <div class="form-group">
+                    <label>NOM</label>
+                    <input name="nom" ng-model="compte.nom" class="form-control" type="text"  ng-minlength="2" ng-required="true">
+                </div>
+                <div ng-show="formUp.nom.$touched && formUp.nom.$invalid">
+                    <small class="alert alert-danger" style="color:red; display: block; text-align:center; ">Le nom doit contenir au moins 2 lettre</small>
+                </div>
+                <div class="form-group">
+                    <label>E-MAIL</label>
+                    <input name="mail"  ng-model="compte.mail"  placeholder="@email" class="form-control" type="email">
+                </div>
+                <div ng-show="formUp.mail.$touched && formUp.mail.$invalid">
+                    <small class="alert alert-danger" style="color:red; display: block; text-align:center; ">Entrer un @email valide</small>
+                </div>
+                <div class="form-group">
+                    <label>TELEPHONE</label>
+                    <input name="telephone" ng-model="compte.telephone" placeholder="+33" class="form-control" type="number" ng-minlength="10" required>
+                </div>
+                <div ng-show="formUp.telephone.$touched && formUp.telephone.$invalid">
+                    <small class="alert alert-danger" style="color:red; display: block; text-align:center; ">Le numero de telephone doit contenir au moins 10 chiffres</small>
+                </div>
+                <div class="form-group">
+                    <label>PRESENTATION</label>
+                    <input name="presentation"  ng-model="compte.presentation" placeholder="" class="form-control" type="text">
+                </div>
+                <div class="form-group">
+                    <label>PHOTO</label>
+                    <input name="image"  ng-model="compte.image" class="form-control" type="text">
+                </div>
+                <div class="form-group">
+                    <label>VIDEO</label>
+                    <input name="video" ng-model="compte.video" class="form-control" type="text">
+                </div>
+                <div class="form-group">
+                    <label>ADRESSE</label>
+                    <input name="adresse" ng-model="compte.adresse" placeholder="adresse" class="form-control" type="text">
+                </div>
+
+                <div class="form-group">
+                    <label>VILLE</label>
+                    <input name="ville" ng-model="compte.ville" placeholder="ville" class="form-control" type="text">
+                </div>
+                <div class="form-group">
+                    <label>CODE POSTAL</label>
+                    <input name="codePostal" ng-model="compte.codePostal" placeholder="code postal" class="form-control" type="number" ng-minlength="5" required>
+                </div>
+                <div ng-show="formUp.codePostal.$touched && formUp.codePostal.$invalid">
+                    <small class="alert alert-danger" style="color:red; display: block; text-align:center; ">Le code postal doit contenir 5 chiffres</small>
+                </div>
+
+                <div class="form-group" ng-controller="paysCtrl">
+                    <label>PAYS</label>
+                    <select name="pays"   class="form-control selectpicker" ng-model="compte.libellePays">
+                        <option ng-repeat="p in pays" >{{p.libellePays}}</option>
+                    </select>
+                </div>
+
+                <div class="form-group" ng-controller="metierCtrl">
+                    <label>METIER</label>
+                    <select name="metier" class="form-control selectpicker" ng-model="compte.libelleMetier">
+                        <option ng-repeat="m in metier">{{m.libelleMetier}}</option>
+
+                    </select>
+                </div>
+
+
+                <div class="form-group" ng-controller="categorieCtrl">
+                    <label>CATEGORIE</label>
+                    <select name="categorie" class="form-control selectpicker" ng-model="compte.libelleCategorie">
+                        <option ng-repeat="c in categorie">{{c.libelleCategorie}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <button name="btnUpdate" ng-disabled="formUp.$invalid" ng-click="update(compte)" class="btn btn-info btn btn-block">MODIFIER</button>
+                </div>
+                <div ng-show="formUp.$submitted">
+                    <small class="alert alert-info" style="color:primary; display: block; text-align:center; ">les modifications ont bien été prise en compte</small>
+                </div>
+            </form>
+            
+            
+		  </div>
+		</div>
+        
+            
+            
+
+        </div>
+        
+        
+        <div class="col-md-5 col-lg-5 mx-auto" style="margin-top: 200px;">
+        
+        <div class="card border-info mb-3">
+		  <div class="card-header"><h1 id="connexion">Modifier password</h1></div>
+		  <div class="card-body text-info">
+		    <form name="formUpdate">
+
+                <div class="form-group">
+                    <label>Username:</label>
+                    <input name="username" type="text" ng-model="compte.username" class="form-control" placeholder="Entrer identifiant" readonly>
+                </div>
+
+                <div class="form-group" >
+                    <label >Password:</label>
+                    <input name="password" type="password" ng-model="compte.password" class="form-control" placeholder="Entrer password" ng-minlength="8" required>
+                </div>
+                <div ng-show="formUpdate.password.$touched && formUpdate.password.$invalid">
+                    <small class="alert alert-danger" style="color:red; display: block; text-align:center; ">Le password doit contenir au moins 8 caracteres</small>
+                </div>
+
+                <div>
+                <a href="#">Mot de passe oublie</a>
+            </div>
+                <br>
+                <div class="form-group" >
+                <button ng-click="updatePassword(compte)" class="btn btn-info btn btn-block">MODIFIER</button>
+                </div>
+                <div ng-show="formUpdate.$submitted">
+                    <small class="alert alert-info" style="color:primary; display: block; text-align:center; ">le password a bien été modifier</small>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <a class="btn btn-outline-secondary btn-block" href="experience" role="button">Gerer mes experiences</a>
+
+                    </div>
+
+                    <div class="col-md-6">
+                        <a class="btn btn-outline-secondary btn-block" href="service" role="button">Gerer mes services</a>
+                    </div>
+                </div>
+            </form>
+		  </div>
+		</div>
+            
+            
+        </div>
+    </div>
+</div>
+</div>
+<div th:replace="navbar :: footer"></div>
+</body>
+
+</html>

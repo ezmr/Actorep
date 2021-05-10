@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="/css/bootstrap.css">
+<link rel="stylesheet" href="/css/actorepCss.css">
+<script src="/js/angular.min.js"></script>
+<title>Recherche</title>
+</head>
+<body>
+
+<div th:replace="navbar :: menuBis"></div>
+
+<div class="container-fluid" data-ng-app="rechercheApp">
+
+	<div class="row mt-100 mb-100" data-ng-controller="resultCtrl">
+	
+		<div class="col-3" >
+		
+			<div class="card mt-5 border-info">
+		
+				<h5 class="card-header bg-info">Filtrer par:</h5>
+				
+				<div class="card-body bg-light">
+				
+				
+					
+					<div class="form-check"  ng-hide="disableCategorie">
+					  <input class="form-check-input" type="radio" ng-model="filtreChoix" value="categorie" checked>
+					    <div class="form-group">
+						  <label for="catselect">Catégorie:</label>
+						  <select class="form-control" ng-model="catselect" >
+						    <option ng-repeat="categorie in lesCategories" value="{{categorie.libelleCategorie}}">{{categorie.libelleCategorie}}</option>
+						  </select>
+						</div>
+					</div>
+					
+					<hr>
+					
+					<div class="form-check" ng-hide="disableMetier">
+					  <input class="form-check-input" type="radio" ng-model="filtreChoix" value="metier" >
+					  <div class="form-group">
+						  <label for="metselect">Métier:</label>
+						  <select class="form-control" ng-model="metselect">
+						    <option ng-repeat="metier in lesMetiers" value="{{metier.libelleMetier}}">{{metier.libelleMetier}}</option>
+						  </select>
+						</div>
+					</div>			
+					
+					<hr>
+					
+					<div class="form-check" ng-hide="disableActeur">
+					  <input class="form-check-input" type="radio" ng-model="filtreChoix" value="acteur" >
+					  <div class="form-group">
+						  <label for="usr">Acteur:</label>
+						  <input type="text" class="form-control" ng-model="acteurFiltre">
+						</div>
+					</div>					
+					
+					<hr>
+					
+					<div class="form-check" ng-hide="disableLocation">
+					  <input class="form-check-input" type="radio" ng-model="filtreChoix" value="location" >
+					  <div class="form-group">
+						  <label for="usr">Location:</label>
+						  <input type="text" class="form-control" ng-model="locationFiltre">
+						</div>
+					</div>
+					
+					<hr>
+					
+					<!--
+					<div class="form-check" ng-hide="disableService">
+					  <input class="form-check-input" type="radio" ng-model="filtreChoix" value="service" >
+					  <div class="form-group">
+						  <label for="usr">Service:</label>
+						  <input type="text" class="form-control" ng-model="serviceFiltre">
+						</div>
+					</div>
+					-->
+					
+					
+					<button type="button" class="btn btn-block btn-success" ng-click="btnFiltreValid()">Valider</button>
+					<button type="button" class="btn btn-block btn-secondary" ng-click="btnFiltreReset()">Enlever les filtres</button>
+				
+				</div>
+			
+			</div>
+		
+		</div>
+		
+		
+		<div class="col-8 bg-light">
+		
+			<h3 class="mt-5">Résultat de votre recherche:</h3>
+						
+			<!--<span th:text="${RechercheHomeModel.recherche}"></span>
+			<span th:text="${RechercheHomeModel.location}"></span>-->
+			
+			<div ng-repeat="acteur in lesActeurs"><hr>
+			
+			
+				  <div class="card border-info">
+				        <div class="row no-gutters">
+				            <div class="col-auto">
+				                <img src="/img/profile.jpg" class="img-fluid" height="200" width="200" alt="">
+				            </div>
+				            <div class="col">
+				                <div class="card-block px-2">
+				                    <h4 class="card-title"><a href="/Actorep/Profile?idActeur={{ acteur.idActeur }}" >{{ acteur.nom }}</a></h4>
+				                    Présentation:<p class="card-text" >{{ acteur.presentation }}</p>
+				                    <div class="row">
+					                    <div class="col-6">
+					                    	Catégorie:<p class="card-text" >{{ acteur.categorie.libelleCategorie }}</p>
+					                   		Métier:<p class="card-text" >{{ acteur.metier.libelleMetier }}</p>
+					                    </div>
+					                    <div class="col-6">
+					                    	Location(s):
+						                    <span ng-repeat="adresse in acteur.lesAdresses">
+						                    	<p class="card-text" >{{ adresse.ville }},{{ adresse.pays.libellePays }}</p><br>
+						                    </span>
+					                    </div>
+				                    </div>
+				                </div>
+				            </div>
+				        </div>
+				  </div>
+			  
+			  </div>
+			
+		</div>
+		<div class="col-1"></div>
+	</div>
+</div>
+
+
+<script th:inline="javascript">
+
+var rechercheApp = angular.module("rechercheApp", []);
+
+rechercheApp.controller("resultCtrl", function ($scope, $http){
+	
+	/*[+ var recherche  = [[${RechercheHomeModel.recherche}]]; +]*/	
+	/*[+ var typeRechercheHome  = [[${RechercheHomeModel.type}]]; +]*/	
+	
+	$scope.disableCategorie = false;
+	$scope.disableMetier = false;
+	$scope.disableActeur = false;
+	$scope.disableLocation = false;
+	$scope.disableService = false;
+	
+	if (typeRechercheHome == "categorie"){
+		$scope.disableCategorie = true;
+	}else if (typeRechercheHome == "metier"){
+		$scope.disableMetier = true;
+	}else if (typeRechercheHome == "acteur"){
+		$scope.disableActeur = true;
+	}else if (typeRechercheHome == "service"){
+		$scope.disableService = true;
+	}
+	
+	$scope.lesCategories = [];
+	$scope.lesMetiers = [];
+		
+	//récupération des catégories
+	$http({
+		method: 'POST',
+		url: '/getCategorie',
+		headers: {'Content-Type': 'application/json'}
+	}).then(function mySuccess(response) {
+		$scope.lesCategories = response.data;
+	}, function myError(response) {
+		console.log(response.statusText);
+	});
+	
+	//récupération des métiers
+	$http({
+		method: 'POST',
+		url: '/getMetier',
+		headers: {'Content-Type': 'application/json'}
+	}).then(function mySuccess(response) {
+		$scope.lesMetiers = response.data;
+	}, function myError(response) {
+		console.log(response.statusText);
+	});
+	
+	
+	$scope.lesActeurs = [];
+	
+	$http({
+		method: 'POST',
+		url: '/getAllActeurByAttribute?recherche='+recherche+'&type='+typeRechercheHome,
+		headers: {'Content-Type': 'application/json'}
+	}).then(function mySuccess(response) {
+		$scope.lesActeurs = response.data;
+	}, function myError(response) {
+		console.log(response.statusText);
+	});
+	
+	$scope.btnFiltreReset = function(){
+		
+		$http({
+			method: 'POST',
+			url: '/getAllActeurByAttribute?recherche='+recherche+'&type='+typeRechercheHome,
+			headers: {'Content-Type': 'application/json'}
+		}).then(function mySuccess(response) {
+			$scope.lesActeurs = response.data;
+		}, function myError(response) {
+			console.log(response.statusText);
+		});
+		
+	}
+	
+	
+	
+	$scope.btnFiltreValid = function(){
+		
+		var rechercheFiltre="";
+		var typeFiltre="";
+		
+		if ($scope.filtreChoix == "categorie"){
+			typeFiltre = $scope.filtreChoix;
+			rechercheFiltre = $scope.catselect;
+		}
+		else if ($scope.filtreChoix == "metier"){
+			typeFiltre = $scope.filtreChoix;
+			rechercheFiltre = $scope.metselect;
+		}
+		else if ($scope.filtreChoix == "acteur"){
+			typeFiltre = $scope.filtreChoix;
+			rechercheFiltre = $scope.acteurFiltre;
+		}
+		else if ($scope.filtreChoix == "location"){
+			typeFiltre = $scope.filtreChoix;
+			rechercheFiltre = $scope.locationFiltre;
+		}
+		else if ($scope.filtreChoix == "service"){
+			typeFiltre = $scope.filtreChoix;
+			rechercheFiltre = $scope.serviceFiltre;
+		}
+		
+		
+		$http({
+			method: 'POST',
+			url: '/getAllActeurByFiltre?recherche='+recherche+'&type='+typeRechercheHome+'&rechercheFiltre='+rechercheFiltre+'&typeFiltre='+typeFiltre,
+			headers: {'Content-Type': 'application/json'}
+		}).then(function mySuccess(response) {
+			console.log(response);
+			$scope.lesActeurs = response.data;
+		}, function myError(response) {
+			console.log(response.statusText);
+		});
+	}
+
+});
+	
+</script>
+
+
+</body>
+<footer class="page-footer font-small bg-info fixed-bottom">
+  <div class="footer-copyright text-center py-3">
+    © 2020 Copyright: ActoRep - AFPA PARIS 12ème
+  </div>
+</footer>
+</html>
